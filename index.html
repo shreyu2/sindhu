@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Cinematic Birthday Surprise | For Someone Special</title>
+    <title>Sindhu...</title>
     <!-- High-End Typography -->
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,900&display=swap"
@@ -516,15 +516,13 @@
         /* --- MEMORY GALLERY FIXES --- */
         #gallery-page {
             background: #050505;
+            overflow-x: hidden;
             overflow-y: auto;
             padding: 100px 20px;
-            position: absolute;
-            width: 100vw;
-            min-height: 100vh;
-        }
-        #gallery-page.active {
-            display: block;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         .gallery-title {
@@ -1416,7 +1414,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .final-collage-header {
@@ -2023,9 +2021,20 @@ Somewhere between all our conversations, laughs, and little moments, you became 
     <script>
         // --- Navigation Logic ---
         function transitionTo(pageId) {
+            // Always reset gallery scroll when leaving it
+            const galleryPage = document.getElementById('gallery-page');
+            if (galleryPage) {
+                galleryPage.scrollTop = 0;
+            }
+
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(pageId);
             target.classList.add('active');
+
+            // Always reset window scroll on any page transition
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
 
             if (pageId === 'cake-cutting-page') {
                 resizeCakeCanvas();
@@ -2048,29 +2057,20 @@ Somewhere between all our conversations, laughs, and little moments, you became 
             }
             if (pageId === 'final-collage-page') {
                 const finalPage = document.getElementById('final-collage-page');
-                
-                const resetScroll = () => {
-                    if (finalPage) {
-                        finalPage.scrollTop = 0;
-                    }
-                    window.scrollTo(0, 0);
-                };
 
-                // Reset immediately
-                resetScroll();
+                // Reset the final page's own internal scroll
+                if (finalPage) {
+                    finalPage.scrollTop = 0;
+                }
 
-                // Keep resetting the scroll position for 1.5 seconds to fight any browser scroll restoration / adjustments during transition
-                let count = 0;
-                const scrollInterval = setInterval(() => {
-                    resetScroll();
-                    count++;
-                    if (count >= 30) {
-                        clearInterval(scrollInterval);
-                    }
-                }, 50);
+                // Reset all possible scroll containers
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
 
                 requestAnimationFrame(() => {
-                    resetScroll();
+                    if (finalPage) finalPage.scrollTop = 0;
+                    window.scrollTo(0, 0);
                     startFinalCollageReveal();
                 });
             }
