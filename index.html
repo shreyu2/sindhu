@@ -517,8 +517,13 @@
         #gallery-page {
             background: #050505;
             overflow-y: auto;
-            display: block;
             padding: 100px 20px;
+            position: absolute;
+            width: 100vw;
+            min-height: 100vh;
+        }
+        #gallery-page.active {
+            display: block;
             position: relative;
         }
 
@@ -2042,7 +2047,32 @@ Somewhere between all our conversations, laughs, and little moments, you became 
                 startGalleryEffects();
             }
             if (pageId === 'final-collage-page') {
-                startFinalCollageReveal();
+                const finalPage = document.getElementById('final-collage-page');
+                
+                const resetScroll = () => {
+                    if (finalPage) {
+                        finalPage.scrollTop = 0;
+                    }
+                    window.scrollTo(0, 0);
+                };
+
+                // Reset immediately
+                resetScroll();
+
+                // Keep resetting the scroll position for 1.5 seconds to fight any browser scroll restoration / adjustments during transition
+                let count = 0;
+                const scrollInterval = setInterval(() => {
+                    resetScroll();
+                    count++;
+                    if (count >= 30) {
+                        clearInterval(scrollInterval);
+                    }
+                }, 50);
+
+                requestAnimationFrame(() => {
+                    resetScroll();
+                    startFinalCollageReveal();
+                });
             }
         }
 
