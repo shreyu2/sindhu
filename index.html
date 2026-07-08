@@ -1627,13 +1627,285 @@
                 opacity: 0;
             }
         }
+
+        /* ============================================================
+           COUNTDOWN PAGE STYLES
+           ============================================================ */
+
+        #countdown-page {
+            background: radial-gradient(ellipse at center, #1c0a0d 0%, #0a0305 55%, #050505 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background subtle particle canvas layer */
+        #countdown-bg-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .countdown-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(20px, 5vw, 40px) clamp(16px, 4vw, 32px);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .countdown-lock-icon {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: clamp(14px, 3vh, 24px);
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+            animation: countdownHeartPulse 2.4s ease-in-out infinite;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        @keyframes countdownHeartPulse {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 18px var(--accent-glow), 0 0 35px rgba(255, 45, 85, 0.25);
+            }
+            50% {
+                transform: scale(1.08);
+                text-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(255, 45, 85, 0.45);
+            }
+        }
+
+        .countdown-lock-icon.unlocking {
+            animation: countdownHeartUnlock 0.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes countdownHeartUnlock {
+            0% { transform: scale(1); text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow); }
+            100% { transform: scale(1.2); text-shadow: 0 0 50px var(--accent-glow), 0 0 80px rgba(212, 175, 55, 0.6); }
+        }
+
+        .countdown-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 6vw, 3.2rem);
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            margin: 0 0 clamp(8px, 2vh, 14px) 0;
+            text-shadow: 0 0 25px rgba(255, 45, 85, 0.3);
+            line-height: 1.25;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .countdown-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.8rem, 2.5vw, 1.05rem);
+            color: rgba(255, 255, 255, 0.58);
+            text-align: center;
+            letter-spacing: 1.5px;
+            margin: 0 0 clamp(28px, 5vh, 48px) 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Timer grid */
+        .countdown-timer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(4px, 2vw, 14px);
+            width: 100%;
+            max-width: 92vw;
+            margin-bottom: clamp(18px, 3vh, 28px);
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: clamp(12px, 3vw, 18px);
+            padding: clamp(12px, 3vw, 20px) clamp(10px, 2.5vw, 18px);
+            min-width: clamp(60px, 18vw, 90px);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .countdown-unit.countdown-tick {
+            animation: countdownTickAnim 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes countdownTickAnim {
+            0%   { transform: scale(1); }
+            45%  { transform: scale(1.08); box-shadow: 0 0 20px var(--accent-glow), 0 4px 24px rgba(0,0,0,0.5); }
+            100% { transform: scale(1); }
+        }
+
+        .countdown-unit.glow-unlock {
+            border-color: var(--accent);
+            box-shadow:
+                0 0 30px var(--accent-glow),
+                0 0 60px rgba(212, 175, 55, 0.25),
+                0 4px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .countdown-unit span {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 7vw, 3.5rem);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .countdown-unit small {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.52rem, 1.6vw, 0.72rem);
+            text-transform: uppercase;
+            letter-spacing: clamp(1.5px, 0.5vw, 3px);
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 6px;
+            display: block;
+        }
+
+        .countdown-separator {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 6vw, 3rem);
+            color: rgba(255, 45, 85, 0.5);
+            line-height: 1;
+            margin-bottom: clamp(16px, 3vh, 24px); /* align with number vertically */
+            flex-shrink: 0;
+        }
+
+        .countdown-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.75rem, 2.2vw, 1rem);
+            letter-spacing: clamp(4px, 1.5vw, 8px);
+            text-transform: uppercase;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            margin: 0 0 clamp(10px, 2vh, 18px) 0;
+        }
+
+        .countdown-hint {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.05rem, 3.5vw, 1.45rem);
+            color: rgba(255, 255, 255, 0.42);
+            text-align: center;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* Unlocking state for the page itself */
+        #countdown-page.countdown-unlocking {
+            opacity: 0 !important;
+            transform: scale(0.96) translateZ(0) !important;
+            transition:
+                opacity 1.5s ease !important,
+                transform 1.5s ease !important;
+        }
+
+        /* Float animation for countdown background particles */
+        @keyframes cdParticleFloat {
+            0% {
+                transform: translateY(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            12% { opacity: 0.7; }
+            88% { opacity: 0.4; }
+            100% {
+                transform: translateY(-110vh) scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        /* Midnight burst particle (heart/sparkle, bigger) */
+        @keyframes cdBurstParticle {
+            0% {
+                transform: translate(-50%, -50%) scale(0.3);
+                opacity: 1;
+            }
+            80% { opacity: 0.7; }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            .countdown-timer {
+                gap: clamp(2px, 1.5vw, 8px);
+            }
+            .countdown-separator {
+                font-size: clamp(1.2rem, 5vw, 2rem);
+            }
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- BIRTHDAY COUNTDOWN GATE -->
+    <section id="countdown-page" class="page active">
+        <div id="countdown-bg-particles"></div>
+
+        <div class="countdown-container">
+
+            <span class="countdown-lock-icon" id="countdown-lock-icon" aria-hidden="true">♥</span>
+
+            <h1 class="countdown-title" id="countdown-title">Not yet, Puttu... ❤️</h1>
+
+            <p class="countdown-subtitle" id="countdown-subtitle">Some surprises are worth waiting for.</p>
+
+            <div class="countdown-timer">
+
+                <div class="countdown-unit" id="cd-unit-days">
+                    <span id="countdown-days">00</span>
+                    <small>Days</small>
+                </div>
+
+                <div class="countdown-separator">:</div>
+
+                <div class="countdown-unit" id="cd-unit-hours">
+                    <span id="countdown-hours">00</span>
+                    <small>Hours</small>
+                </div>
+
+                <div class="countdown-separator">:</div>
+
+                <div class="countdown-unit" id="cd-unit-minutes">
+                    <span id="countdown-minutes">00</span>
+                    <small>Minutes</small>
+                </div>
+
+                <div class="countdown-separator">:</div>
+
+                <div class="countdown-unit" id="cd-unit-seconds">
+                    <span id="countdown-seconds">00</span>
+                    <small>Seconds</small>
+                </div>
+
+            </div>
+
+            <p class="countdown-date">14 • 07 • 2026</p>
+
+            <p class="countdown-hint" id="countdown-hint">Come back when the clock strikes twelve ✨</p>
+
+        </div>
+    </section>
+
     <!-- PASSCODE LOCK SCREEN -->
-    <section id="passcode-page" class="page active">
+    <section id="passcode-page" class="page">
         <div id="passcode-particles"></div>
 
         <div class="passcode-container">
@@ -3016,12 +3288,233 @@ Somewhere between all our conversations, laughs, and little moments, you became 
             }, 2200);
         }
 
+        // ============================================================
+        // BIRTHDAY COUNTDOWN GATE
+        // ============================================================
+
+        // Exact birthday unlock: 14 July 2026, 12:00:00 AM IST (UTC+05:30)
+        const birthdayUnlockTime = new Date('2026-07-14T00:00:00+05:30').getTime();
+
+        let birthdayCountdownInterval = null;
+        let birthdayUnlocked = false;
+
+        // Background ambient particles for the countdown page
+        let cdBgParticleInterval = null;
+
+        function createCdBgParticle() {
+            const container = document.getElementById('countdown-bg-particles');
+            if (!container) return;
+            if (!document.getElementById('countdown-page').classList.contains('active')) return;
+
+            const p = document.createElement('div');
+            p.style.cssText = 'position:absolute;pointer-events:none;user-select:none;';
+            p.style.left = (Math.random() * 100) + 'vw';
+            p.style.bottom = '-5vh';
+
+            const isPink = Math.random() > 0.45;
+            if (isPink) {
+                // Small pink dot
+                const size = (Math.random() * 5 + 3);
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.borderRadius = '50%';
+                p.style.background = 'var(--accent)';
+                p.style.boxShadow = '0 0 6px var(--accent-glow)';
+                p.style.opacity = (Math.random() * 0.3 + 0.15).toFixed(2);
+            } else {
+                // Tiny gold sparkle
+                p.textContent = '✦';
+                p.style.color = 'var(--gold)';
+                p.style.textShadow = '0 0 5px rgba(212, 175, 55, 0.5)';
+                p.style.fontSize = (Math.random() * 7 + 5) + 'px';
+                p.style.opacity = (Math.random() * 0.25 + 0.12).toFixed(2);
+            }
+
+            const dur = Math.random() * 6 + 7; // 7–13s
+            p.style.animation = `cdParticleFloat ${dur}s linear forwards`;
+            container.appendChild(p);
+            setTimeout(() => p.remove(), dur * 1000 + 300);
+        }
+
+        function startCdBgParticles() {
+            if (cdBgParticleInterval) clearInterval(cdBgParticleInterval);
+            cdBgParticleInterval = setInterval(createCdBgParticle, 700);
+        }
+
+        function stopCdBgParticles() {
+            if (cdBgParticleInterval) {
+                clearInterval(cdBgParticleInterval);
+                cdBgParticleInterval = null;
+            }
+        }
+
+        // Tick animation helper
+        function triggerCountdownTick(unitId) {
+            const unit = document.getElementById(unitId);
+            if (!unit) return;
+            unit.classList.remove('countdown-tick');
+            void unit.offsetWidth; // force reflow
+            unit.classList.add('countdown-tick');
+            setTimeout(() => unit.classList.remove('countdown-tick'), 360);
+        }
+
+        // Previous values to detect change
+        let cdPrev = { d: null, h: null, m: null, s: null };
+
+        function updateBirthdayCountdown() {
+            const now = Date.now();
+            const distance = birthdayUnlockTime - now;
+
+            if (distance <= 0) {
+                // Birthday has arrived!
+                clearInterval(birthdayCountdownInterval);
+                birthdayCountdownInterval = null;
+
+                if (birthdayUnlocked) return;
+                birthdayUnlocked = true;
+
+                // Set all units to 00
+                ['countdown-days','countdown-hours','countdown-minutes','countdown-seconds'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = '00';
+                });
+
+                unlockBirthdayExperience();
+                return;
+            }
+
+            const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const dStr = String(days).padStart(2, '0');
+            const hStr = String(hours).padStart(2, '0');
+            const mStr = String(minutes).padStart(2, '0');
+            const sStr = String(seconds).padStart(2, '0');
+
+            const dEl = document.getElementById('countdown-days');
+            const hEl = document.getElementById('countdown-hours');
+            const mEl = document.getElementById('countdown-minutes');
+            const sEl = document.getElementById('countdown-seconds');
+
+            if (dEl && dStr !== cdPrev.d) { dEl.textContent = dStr; triggerCountdownTick('cd-unit-days'); cdPrev.d = dStr; }
+            if (hEl && hStr !== cdPrev.h) { hEl.textContent = hStr; triggerCountdownTick('cd-unit-hours'); cdPrev.h = hStr; }
+            if (mEl && mStr !== cdPrev.m) { mEl.textContent = mStr; triggerCountdownTick('cd-unit-minutes'); cdPrev.m = mStr; }
+            if (sEl && sStr !== cdPrev.s) { sEl.textContent = sStr; triggerCountdownTick('cd-unit-seconds'); cdPrev.s = sStr; }
+        }
+
+        function unlockBirthdayExperience() {
+            stopCdBgParticles();
+
+            // 0ms — glow the units, pulse the heart
+            ['cd-unit-days','cd-unit-hours','cd-unit-minutes','cd-unit-seconds'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('glow-unlock');
+            });
+
+            const lockIcon = document.getElementById('countdown-lock-icon');
+            if (lockIcon) lockIcon.classList.add('unlocking');
+
+            const title    = document.getElementById('countdown-title');
+            const subtitle = document.getElementById('countdown-subtitle');
+            const hint     = document.getElementById('countdown-hint');
+
+            if (title)    title.textContent    = 'It\'s your day, Sindhu... ❤️';
+            if (subtitle) subtitle.textContent  = 'Happy Birthday, Puttu ✨';
+            if (hint)     hint.style.opacity   = '0';
+
+            // Burst particles
+            createMidnightBurst();
+
+            // ~1200ms — page starts fading
+            setTimeout(() => {
+                const cdPage = document.getElementById('countdown-page');
+                if (cdPage) cdPage.classList.add('countdown-unlocking');
+            }, 1200);
+
+            // ~2800ms — transition to passcode page
+            setTimeout(() => {
+                transitionTo('passcode-page');
+                const cdPage = document.getElementById('countdown-page');
+                if (cdPage) cdPage.classList.remove('countdown-unlocking');
+                // Re-start passcode particles now that passcode is visible
+                startPasscodeParticles();
+            }, 2800);
+        }
+
+        function createMidnightBurst() {
+            const page = document.getElementById('countdown-page');
+            if (!page) return;
+
+            const rect = page.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const symbols = ['❤️', '✨', '❤️', '✨', '💖', '✨', '❤️'];
+            const count = 55;
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.style.cssText = [
+                    'position:fixed',
+                    'pointer-events:none',
+                    'z-index:9999',
+                    `left:${centerX}px`,
+                    `top:${centerY}px`,
+                    'transform:translate(-50%,-50%) scale(0.3)',
+                    'opacity:1',
+                    'transition:transform 1.4s cubic-bezier(0.25,1,0.5,1), opacity 1.3s ease',
+                    'user-select:none'
+                ].join(';');
+
+                p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                p.style.fontSize = (Math.random() * 16 + 10) + 'px';
+
+                document.body.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const dist  = Math.random() * 160 + 60;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist;
+
+                void p.offsetWidth;
+
+                p.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.6)`;
+                p.style.opacity = '0';
+
+                setTimeout(() => p.remove(), 1500);
+            }
+        }
+
+        function initBirthdayCountdown() {
+            const now = Date.now();
+
+            if (now >= birthdayUnlockTime) {
+                // Birthday already started — skip countdown, go straight to passcode
+                birthdayUnlocked = true;
+                // Make countdown page invisible immediately (no flicker)
+                const cdPage = document.getElementById('countdown-page');
+                if (cdPage) cdPage.classList.remove('active');
+                transitionTo('passcode-page');
+            } else {
+                // Start countdown
+                updateBirthdayCountdown();
+                birthdayCountdownInterval = setInterval(updateBirthdayCountdown, 1000);
+                startCdBgParticles();
+            }
+        }
+
         window.onload = () => {
+            initBirthdayCountdown();
             initFairyLights();
             initCakeCutting();
             initAudioEvents();
             updatePasscodeUI();
-            startPasscodeParticles();
+            // Only start passcode particles if passcode page is active
+            if (document.getElementById('passcode-page').classList.contains('active')) {
+                startPasscodeParticles();
+            }
             initFinalCollageInteraction();
         };
     </script>
