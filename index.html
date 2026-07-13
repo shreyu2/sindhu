@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Cinematic Birthday Surprise | For Someone Special</title>
+    <title>Sindhu...</title>
     <!-- High-End Typography -->
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,900&display=swap"
@@ -516,10 +516,13 @@
         /* --- MEMORY GALLERY FIXES --- */
         #gallery-page {
             background: #050505;
+            overflow-x: hidden;
             overflow-y: auto;
-            display: block;
             padding: 100px 20px;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         .gallery-title {
@@ -636,7 +639,7 @@
             }
         }
 
-        /* --- CAKE CUTTING SECTION STYLES --- */
+        /* --- CAKE MEMORY REVEAL STYLES --- */
         #cake-cutting-page {
             background: radial-gradient(circle at center, #1c0a0d 0%, #050505 100%);
             display: flex;
@@ -644,7 +647,12 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            scroll-behavior: smooth;
         }
+
+
+
+        /* --- CAKE CUTTING SECTION STYLES --- */
 
         .cake-header {
             margin-bottom: 25px;
@@ -1116,13 +1124,556 @@
         .music-equalizer.paused .bar {
             animation-play-state: paused;
         }
+
+        /* ============================================================
+           PASSCODE LOCK SCREEN STYLES
+           ============================================================ */
+
+        #passcode-page {
+            background: radial-gradient(circle at center, #1a0a0c 0%, #050505 100%);
+            height: 100vh;
+            height: 100dvh;
+            min-height: 100dvh;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #passcode-particles {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .passcode-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 430px;
+            height: 100%;
+            max-height: 100dvh;
+            padding: clamp(16px, 3vh, 28px) 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .passcode-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 5vw, 2.8rem);
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(255, 45, 85, 0.25);
+        }
+
+        .passcode-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.75rem, 2vw, 1rem);
+            letter-spacing: clamp(1px, 0.5vw, 3px);
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .passcode-hint {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            color: rgba(255, 255, 255, 0.42);
+            text-align: center;
+            margin-bottom: clamp(18px, 3vh, 30px);
+        }
+
+        .passcode-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(6px, 2vw, 14px);
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .passcode-box {
+            width: clamp(38px, 10vw, 54px);
+            height: clamp(44px, 10vw, 54px);
+            flex: 0 1 54px;
+            border-radius: 13px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            color: var(--accent);
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.015);
+            transition:
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        .passcode-box.filled {
+            border-color: var(--accent);
+            box-shadow:
+                0 0 12px var(--accent-glow),
+                inset 0 0 10px rgba(255, 45, 85, 0.08);
+        }
+
+        .passcode-box.pop {
+            animation: passcodePop 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .passcode-box.active {
+            border-color: rgba(255, 45, 85, 0.8);
+            animation: passcodeActivePulse 1.5s ease-in-out infinite;
+        }
+
+        .passcode-box.wrong {
+            border-color: #ff3b5c !important;
+            color: #ff3b5c !important;
+            box-shadow: 0 0 18px rgba(255, 59, 92, 0.7) !important;
+        }
+
+        .passcode-box.correct {
+            border-color: var(--gold) !important;
+            color: var(--gold) !important;
+            box-shadow:
+                0 0 15px var(--accent-glow),
+                0 0 25px rgba(212, 175, 55, 0.55) !important;
+        }
+
+        @keyframes passcodePop {
+            0%   { transform: scale(0.78); }
+            65%  { transform: scale(1.12); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes passcodeActivePulse {
+            0%, 100% { box-shadow: 0 0 3px rgba(255, 45, 85, 0.15); }
+            50%       { box-shadow: 0 0 14px var(--accent-glow); }
+        }
+
+        .passcode-message-feedback {
+            min-height: 38px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: clamp(8px, 1.5vh, 15px);
+            font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+        }
+
+        .passcode-message-feedback.error {
+            color: var(--accent);
+        }
+
+        .passcode-message-feedback.success {
+            color: var(--gold);
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            text-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .passcode-display.shake-container {
+            animation: passcodeShake 0.5s ease-in-out;
+        }
+
+        @keyframes passcodeShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60%  { transform: translateX(-10px); }
+            40%, 80%  { transform: translateX(10px); }
+        }
+
+        /* Passcode page float particle animation */
+        @keyframes passcodeFloatParticle {
+            0%   { transform: translateY(0) scale(0); opacity: 0; }
+            15%  { opacity: 0.7; }
+            85%  { opacity: 0.5; }
+            100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: center;
+            gap: clamp(10px, 2vh, 15px) clamp(18px, 5vw, 25px);
+            width: 100%;
+        }
+
+        .keypad-btn {
+            position: relative;
+            width: clamp(55px, 14vw, 66px);
+            height: clamp(55px, 14vw, 66px);
+            min-width: 55px;
+            min-height: 55px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.2rem, 4vw, 1.55rem);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            transition:
+                transform 0.18s ease,
+                background 0.18s ease,
+                border-color 0.18s ease,
+                box-shadow 0.18s ease;
+        }
+
+        @media (hover: hover) {
+            .keypad-btn:hover {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: var(--accent);
+                box-shadow: 0 0 15px var(--accent-glow);
+                transform: translateY(-2px);
+            }
+        }
+
+        .keypad-btn:active,
+        .keypad-btn.key-pressed {
+            transform: scale(0.9);
+            background: rgba(255, 45, 85, 0.8);
+            border-color: var(--accent);
+            box-shadow: 0 0 22px var(--accent-glow);
+        }
+
+        .keypad-btn.special-btn {
+            color: var(--accent);
+        }
+
+        .keypad-btn.special-btn:active,
+        .keypad-btn.special-btn.key-pressed {
+            color: #fff;
+        }
+
+        .passcode-page-unlocking {
+            opacity: 0 !important;
+            transform: scale(0.95) translateZ(0) !important;
+            transition:
+                opacity 1.2s ease !important,
+                transform 1.2s ease !important;
+        }
+
+        /* --- Passcode responsive overrides --- */
+        @media (max-width: 600px) {
+            .passcode-title {
+                font-size: clamp(1.4rem, 6vw, 2rem);
+            }
+            .passcode-box {
+                flex: 0 1 44px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .passcode-container {
+                justify-content: center;
+                padding: 8px 16px;
+            }
+            .passcode-hint {
+                margin-bottom: 12px;
+            }
+            .passcode-message-feedback {
+                min-height: 28px;
+                margin-bottom: 6px;
+            }
+            .keypad {
+                gap: 8px 18px;
+            }
+        }
+
+        /* --- FINAL COLLAGE PAGE STYLES --- */
+        #final-collage-page {
+            background: radial-gradient(circle at center, #1c0a0d 0%, #050505 100%);
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: clamp(35px, 6vh, 70px) 20px;
+        }
+
+        .final-collage-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .final-collage-header {
+            margin-bottom: clamp(25px, 4vh, 45px);
+            text-align: center;
+        }
+
+        .final-collage-eyebrow {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0 0 12px 0;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .final-collage-eyebrow.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-collage-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 45, 85, 0.4);
+            margin: 0 0 12px 0;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .final-collage-title.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-collage-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.95rem, 2.5vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .final-collage-subtitle.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-collage-reveal {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(45px) scale(0.94);
+            transition: opacity 1.1s cubic-bezier(0.25, 1, 0.3, 1), transform 1.1s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+
+        .final-collage-reveal.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .final-collage-card {
+            position: relative;
+            width: min(94vw, 720px);
+            overflow: hidden;
+            border-radius: 26px;
+            background: rgba(5, 5, 5, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.65),
+                0 0 40px rgba(255, 45, 85, 0.12);
+            transition:
+                transform 0.6s ease,
+                box-shadow 0.6s ease,
+                border-color 0.6s ease;
+            cursor: pointer;
+        }
+
+        .final-collage-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .final-collage-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.8s ease;
+        }
+
+        .final-collage-card:hover .final-collage-image {
+            transform: scale(1.04);
+        }
+
+        .final-collage-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        .final-collage-card:hover .final-collage-overlay {
+            opacity: 1;
+        }
+
+        .final-collage-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.7rem, 5vw, 2.5rem);
+            color: #fff;
+            text-align: center;
+            line-height: 1.4;
+            text-shadow: 0 0 15px var(--accent);
+            transform: translateY(20px);
+            transition: transform 0.5s ease;
+            margin: 0;
+        }
+
+        .final-collage-card:hover .final-collage-message {
+            transform: translateY(0);
+        }
+
+        /* Mobile tap interaction classes */
+        .final-collage-card.touch-active {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .final-collage-card.touch-active .final-collage-image {
+            transform: scale(1.04);
+        }
+
+        .final-collage-card.touch-active .final-collage-overlay {
+            opacity: 1;
+        }
+
+        .final-collage-card.touch-active .final-collage-message {
+            transform: translateY(0);
+        }
+
+        .final-ending-message {
+            margin-top: clamp(35px, 5vh, 60px);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .final-ending-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-ending-message p {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(255, 45, 85, 0.4);
+            margin: 0 0 10px 0;
+        }
+
+        .final-ending-message span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .final-collage-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        @keyframes finalFloatParticle {
+            0% {
+                transform: translateY(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.75;
+            }
+            85% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-105vh) scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- PASSCODE LOCK SCREEN -->
+    <section id="passcode-page" class="page active">
+        <div id="passcode-particles"></div>
+
+        <div class="passcode-container">
+            <h1 class="passcode-title">Only You Can Open This ❤️</h1>
+            <p class="passcode-subtitle">A little secret is waiting for you...</p>
+            <p class="passcode-hint">Hint: Your date of birth ❤️</p>
+
+            <div class="passcode-display" id="passcode-display" aria-label="6 digit passcode">
+                <div class="passcode-box"></div>
+                <div class="passcode-box"></div>
+                <div class="passcode-box"></div>
+                <div class="passcode-box"></div>
+                <div class="passcode-box"></div>
+                <div class="passcode-box"></div>
+            </div>
+
+            <div id="passcode-feedback" class="passcode-message-feedback" aria-live="polite"></div>
+
+            <div class="keypad">
+                <button type="button" class="keypad-btn" onclick="pressKey('1')">1</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('2')">2</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('3')">3</button>
+
+                <button type="button" class="keypad-btn" onclick="pressKey('4')">4</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('5')">5</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('6')">6</button>
+
+                <button type="button" class="keypad-btn" onclick="pressKey('7')">7</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('8')">8</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('9')">9</button>
+
+                <button type="button" class="keypad-btn special-btn" onclick="pressBackspace()" aria-label="Delete last digit">⌫</button>
+                <button type="button" class="keypad-btn" onclick="pressKey('0')">0</button>
+                <button type="button" class="keypad-btn special-btn unlock-btn" onclick="submitPasscode()" aria-label="Unlock">♥</button>
+            </div>
+        </div>
+    </section>
+
     <!-- HERO SECTION -->
-    <section id="hero-page" class="page active">
+    <section id="hero-page" class="page">
         <div id="particle-container"
             style="position: absolute; width: 100%; height: 100%; top:0; left:0; pointer-events: none;"></div>
         <h1 class="hero-title">Manny More Happy Returns of the Day Sindhuma...</h1>
@@ -1137,7 +1688,7 @@
         <div class="slider-card">
             <div id="step-1" class="step-content active">
                 <h2 class="step-text">It's Your Special Day</h2>
-                <button class="btn-neon" onclick="transitionTo('cake-cutting-page')">Next</button>
+                <button class="btn-neon" onclick="nextStep(2)">Next</button>
             </div>
             <div id="step-2" class="step-content">
                 <h2 class="step-text">Have a look at it Papu...</h2>
@@ -1311,6 +1862,8 @@
                     <div class="indicator-line"></div>
                 </div>
 
+
+
                 <!-- Post-cut messages and button -->
                 <div class="post-cut-message" id="post-cut-message">
                     <p class="wish-message">May every wish in your heart come true, Puttu... ❤️</p>
@@ -1433,7 +1986,31 @@ Somewhere between all our conversations, laughs, and little moments, you became 
             </div>
         </div>
         <div style="text-align: center; padding: 100px 0;">
-            <button class="btn-neon" onclick="location.reload()">Replay The Magic</button>
+            <button class="btn-neon" onclick="transitionTo('final-collage-page')">One Last Surprise ❤️</button>
+        </div>
+    </section>
+
+    <!-- NEW FINAL COLLAGE PAGE -->
+    <section id="final-collage-page" class="page">
+        <div id="final-collage-particles" class="final-collage-particles"></div>
+        <div class="final-collage-container">
+            <div class="final-collage-header">
+                <p class="final-collage-eyebrow">One last little thing...</p>
+                <h1 class="final-collage-title">Every Version of You ❤️</h1>
+                <p class="final-collage-subtitle">And somehow, every one of them is special.</p>
+            </div>
+            <div class="final-collage-reveal" id="final-collage-reveal">
+                <div class="final-collage-card">
+                    <img src="image.png" alt="A heart made of beautiful memories" class="final-collage-image">
+                    <div class="final-collage-overlay">
+                        <p class="final-collage-message">A thousand little moments, one very special you ❤️</p>
+                    </div>
+                </div>
+            </div>
+            <div class="final-ending-message" id="final-ending-message">
+                <p>Happiest Birthday, Sindhu ❤️</p>
+                <span>Some memories deserve to stay forever...</span>
+            </div>
         </div>
     </section>
 
@@ -1444,9 +2021,20 @@ Somewhere between all our conversations, laughs, and little moments, you became 
     <script>
         // --- Navigation Logic ---
         function transitionTo(pageId) {
+            // Always reset gallery scroll when leaving it
+            const galleryPage = document.getElementById('gallery-page');
+            if (galleryPage) {
+                galleryPage.scrollTop = 0;
+            }
+
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(pageId);
             target.classList.add('active');
+
+            // Always reset window scroll on any page transition
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
 
             if (pageId === 'cake-cutting-page') {
                 resizeCakeCanvas();
@@ -1466,6 +2054,25 @@ Somewhere between all our conversations, laughs, and little moments, you became 
             }
             if (pageId === 'gallery-page') {
                 startGalleryEffects();
+            }
+            if (pageId === 'final-collage-page') {
+                const finalPage = document.getElementById('final-collage-page');
+
+                // Reset the final page's own internal scroll
+                if (finalPage) {
+                    finalPage.scrollTop = 0;
+                }
+
+                // Reset all possible scroll containers
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+
+                requestAnimationFrame(() => {
+                    if (finalPage) finalPage.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                    startFinalCollageReveal();
+                });
             }
         }
 
@@ -1623,11 +2230,10 @@ Somewhere between all our conversations, laughs, and little moments, you became 
             } else if (celebStep === 3) {
                 spawnBalloons(document.body);
                 hint.innerHTML = "Wait for the Ballons... Almost there... " + getEqualizerHtml();
-                btn.innerText = "✨ Show The Message";
+                btn.innerText = "🎂 Time To Cut The Cake";
                 celebStep = 4;
             } else {
-                fadeOutBirthdayMusic();
-                transitionTo('curtain-page');
+                transitionTo('cake-cutting-page');
             }
         }
 
@@ -1845,6 +2451,7 @@ Somewhere between all our conversations, laughs, and little moments, you became 
 
         function triggerCakeCut(rect) {
             cakeCut = true;
+            fadeOutBirthdayMusic();
             
             const wrapper = document.getElementById('cake-visual-wrapper');
             const page = document.getElementById('cake-cutting-page');
@@ -1866,6 +2473,8 @@ Somewhere between all our conversations, laughs, and little moments, you became 
 
             trailPoints = [];
 
+
+
             setTimeout(() => {
                 const instruction = document.getElementById('cake-instruction');
                 const indicator = document.getElementById('swipe-indicator');
@@ -1877,8 +2486,7 @@ Somewhere between all our conversations, laughs, and little moments, you became 
         }
 
         function continueFromCake() {
-            transitionTo('message-slider-page');
-            nextStep(2);
+            transitionTo('curtain-page');
         }
 
         function spawnCakeParticles(x, y, type, count) {
@@ -2040,10 +2648,381 @@ Somewhere between all our conversations, laughs, and little moments, you became 
             });
         }
 
+        // ============================================================
+        // PASSCODE LOCK SCREEN LOGIC
+        // ============================================================
+
+        let passcodeEntered = "";
+        const correctPasscode = "140707";
+        let isPasscodeVerifying = false;
+        let passcodeParticleInterval = null;
+        let lastPasscodeLength = 0;
+        let incompleteTimer = null;
+        let passcodeSuccessFadeTimeout = null;
+        let passcodeSuccessTransitionTimeout = null;
+
+        function pressKey(num) {
+            if (isPasscodeVerifying) return;
+            if (passcodeEntered.length >= 6) return;
+
+            passcodeEntered += num;
+            updatePasscodeUI();
+        }
+
+        function pressBackspace() {
+            if (isPasscodeVerifying) return;
+            if (passcodeEntered.length === 0) return;
+
+            passcodeEntered = passcodeEntered.slice(0, -1);
+            updatePasscodeUI();
+        }
+
+        function submitPasscode() {
+            if (isPasscodeVerifying) return;
+
+            if (passcodeEntered.length < 6) {
+                showIncompletePasscodeFeedback();
+                return;
+            }
+
+            verifyPasscode();
+        }
+
+        function updatePasscodeUI() {
+            const boxes = document.querySelectorAll('#passcode-page .passcode-box');
+            const currentLength = passcodeEntered.length;
+            const newDigitAdded = currentLength > lastPasscodeLength;
+
+            boxes.forEach((box, index) => {
+                if (index < currentLength) {
+                    box.classList.remove('active', 'wrong', 'correct');
+                    box.classList.add('filled');
+                    box.textContent = '\u2665'; // ♥
+
+                    // Only animate the newly filled box
+                    if (newDigitAdded && index === currentLength - 1) {
+                        box.classList.remove('pop');
+                        void box.offsetWidth; // force reflow
+                        box.classList.add('pop');
+                    }
+                } else if (index === currentLength && currentLength < 6) {
+                    box.classList.remove('filled', 'wrong', 'correct', 'pop');
+                    box.classList.add('active');
+                    box.textContent = '';
+                } else {
+                    box.classList.remove('filled', 'active', 'wrong', 'correct', 'pop');
+                    box.textContent = '';
+                }
+            });
+
+            lastPasscodeLength = currentLength;
+        }
+
+        function verifyPasscode() {
+            if (isPasscodeVerifying) return;
+            isPasscodeVerifying = true;
+
+            if (passcodeEntered === correctPasscode) {
+                triggerCorrectPasscodeAnimation();
+            } else {
+                triggerWrongPasscodeAnimation("Not quite, Puttu... try again \u2764\ufe0f");
+            }
+        }
+
+        function triggerCorrectPasscodeAnimation() {
+            // isPasscodeVerifying is already true
+            const boxes = document.querySelectorAll('#passcode-page .passcode-box');
+            boxes.forEach(box => {
+                box.classList.remove('filled', 'active', 'wrong', 'pop');
+                box.classList.add('correct');
+            });
+
+            const feedback = document.getElementById('passcode-feedback');
+            feedback.className = 'passcode-message-feedback success';
+            feedback.textContent = 'I knew it was you, Sindhu... \u2764\ufe0f';
+
+            createHeartBurst();
+
+            if (passcodeParticleInterval) {
+                clearInterval(passcodeParticleInterval);
+                passcodeParticleInterval = null;
+            }
+
+            // Safety: clear any previous success timers
+            if (passcodeSuccessFadeTimeout) {
+                clearTimeout(passcodeSuccessFadeTimeout);
+            }
+            if (passcodeSuccessTransitionTimeout) {
+                clearTimeout(passcodeSuccessTransitionTimeout);
+            }
+
+            const passcodePage = document.getElementById('passcode-page');
+
+            // 1300ms: begin cinematic fade
+            passcodeSuccessFadeTimeout = setTimeout(() => {
+                passcodePage.classList.add('passcode-page-unlocking');
+            }, 1300);
+
+            // 2500ms: open hero page
+            passcodeSuccessTransitionTimeout = setTimeout(() => {
+                transitionTo('hero-page');
+                passcodePage.classList.remove('passcode-page-unlocking');
+                passcodeSuccessFadeTimeout = null;
+                passcodeSuccessTransitionTimeout = null;
+            }, 2500);
+        }
+
+        function triggerWrongPasscodeAnimation(message) {
+            // isPasscodeVerifying is already true
+            const display = document.getElementById('passcode-display');
+            const boxes = document.querySelectorAll('#passcode-page .passcode-box');
+
+            display.classList.add('shake-container');
+            boxes.forEach(box => box.classList.add('wrong'));
+
+            const feedback = document.getElementById('passcode-feedback');
+            feedback.className = 'passcode-message-feedback error';
+            feedback.textContent = message;
+
+            setTimeout(() => {
+                display.classList.remove('shake-container');
+                boxes.forEach(box => {
+                    box.classList.remove('wrong', 'correct', 'pop');
+                });
+
+                feedback.textContent = '';
+                feedback.className = 'passcode-message-feedback';
+
+                passcodeEntered = '';
+                lastPasscodeLength = 0;
+                isPasscodeVerifying = false;
+
+                updatePasscodeUI();
+            }, 800);
+        }
+
+        function showIncompletePasscodeFeedback() {
+            // Cancel any previous incomplete-feedback timer
+            if (incompleteTimer) {
+                clearTimeout(incompleteTimer);
+                incompleteTimer = null;
+            }
+
+            const display = document.getElementById('passcode-display');
+            const feedback = document.getElementById('passcode-feedback');
+
+            display.classList.remove('shake-container');
+            void display.offsetWidth; // force reflow
+            display.classList.add('shake-container');
+
+            feedback.className = 'passcode-message-feedback error';
+            feedback.textContent = 'Enter all 6 digits first \u2764\ufe0f';
+
+            incompleteTimer = setTimeout(() => {
+                display.classList.remove('shake-container');
+                feedback.textContent = '';
+                feedback.className = 'passcode-message-feedback';
+                incompleteTimer = null;
+            }, 900);
+        }
+
+        // --- Passcode Background Particles ---
+
+        function createPasscodeParticle() {
+            const container = document.getElementById('passcode-particles');
+            if (!container) return;
+
+            const p = document.createElement('div');
+            p.style.cssText = 'position:absolute;pointer-events:none;';
+            p.style.left = (Math.random() * 100) + 'vw';
+            p.style.bottom = '-5vh';
+
+            const types = ['\u2764\ufe0f', '\u2728', '\u2022'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            p.textContent = type;
+
+            if (type === '\u2022') {
+                p.style.color = 'var(--accent)';
+                p.style.textShadow = '0 0 8px var(--accent)';
+                p.style.fontSize = (Math.random() * 8 + 8) + 'px';
+                p.style.opacity = '0.6';
+            } else if (type === '\u2728') {
+                p.style.color = 'var(--gold)';
+                p.style.textShadow = '0 0 8px var(--gold)';
+                p.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                p.style.opacity = '0.5';
+            } else {
+                p.style.color = 'var(--accent)';
+                p.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                p.style.opacity = '0.45';
+            }
+
+            const duration = Math.random() * 4 + 5; // 5-9 seconds
+            p.style.animation = `passcodeFloatParticle ${duration}s linear forwards`;
+
+            container.appendChild(p);
+            setTimeout(() => p.remove(), duration * 1000 + 200);
+        }
+
+        function startPasscodeParticles() {
+            if (passcodeParticleInterval) clearInterval(passcodeParticleInterval);
+            // Spawn every 550ms — elegant and minimal
+            passcodeParticleInterval = setInterval(createPasscodeParticle, 550);
+        }
+
+        // --- Heart Burst on Correct Passcode ---
+
+        function createHeartBurst() {
+            const display = document.getElementById('passcode-display');
+            if (!display) return;
+
+            const rect = display.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const count = 42;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.style.cssText = [
+                    'position:fixed',
+                    'pointer-events:none',
+                    'z-index:9999',
+                    `left:${centerX}px`,
+                    `top:${centerY}px`,
+                    'transform:translate(-50%,-50%) scale(0.4)',
+                    'opacity:1',
+                    'transition:transform 1.2s cubic-bezier(0.25,1,0.5,1), opacity 1.1s ease'
+                ].join(';');
+
+                const isHeart = Math.random() > 0.45;
+                p.textContent = isHeart ? '\u2764\ufe0f' : '\u2728';
+                p.style.fontSize = (Math.random() * 14 + 10) + 'px';
+
+                if (!isHeart) {
+                    p.style.textShadow = '0 0 8px var(--gold)';
+                }
+
+                document.body.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 140 + 50;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist;
+
+                // Force reflow before setting transition target
+                void p.offsetWidth;
+
+                p.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5)`;
+                p.style.opacity = '0';
+
+                setTimeout(() => p.remove(), 1300);
+            }
+        }
+
+        /* --- NEW FINAL COLLAGE PAGE LOGIC --- */
+        let finalParticlesInterval = null;
+
+        function createFinalCollageParticle() {
+            const page = document.getElementById('final-collage-page');
+            if (!page || !page.classList.contains('active')) {
+                if (finalParticlesInterval) {
+                    clearInterval(finalParticlesInterval);
+                    finalParticlesInterval = null;
+                }
+                return;
+            }
+
+            const container = document.getElementById('final-collage-particles');
+            if (!container) return;
+
+            const p = document.createElement('div');
+            p.style.cssText = 'position:absolute;pointer-events:none;';
+            p.style.left = (Math.random() * 100) + 'vw';
+            p.style.bottom = '-5vh';
+
+            const isSparkle = Math.random() > 0.5;
+            if (isSparkle) {
+                p.textContent = '✨';
+                p.style.color = 'var(--gold)';
+                p.style.textShadow = '0 0 6px var(--gold)';
+                p.style.fontSize = (Math.random() * 8 + 6) + 'px';
+                p.style.opacity = '0.55';
+            } else {
+                p.textContent = '•';
+                p.style.color = 'var(--accent)';
+                p.style.textShadow = '0 0 6px var(--accent)';
+                p.style.fontSize = (Math.random() * 12 + 10) + 'px';
+                p.style.opacity = '0.65';
+            }
+
+            const duration = Math.random() * 6 + 6;
+            p.style.animation = `finalFloatParticle ${duration}s linear forwards`;
+
+            container.appendChild(p);
+            setTimeout(() => {
+                p.remove();
+            }, duration * 1000 + 200);
+        }
+
+        function initFinalCollageParticles() {
+            if (finalParticlesInterval) clearInterval(finalParticlesInterval);
+            const page = document.getElementById('final-collage-page');
+            if (page && page.classList.contains('active')) {
+                finalParticlesInterval = setInterval(createFinalCollageParticle, 700);
+            }
+        }
+
+        function initFinalCollageInteraction() {
+            const card = document.querySelector('.final-collage-card');
+            if (!card) return;
+            card.addEventListener('click', () => {
+                card.classList.toggle('touch-active');
+            });
+        }
+
+        function startFinalCollageReveal() {
+            const eyebrow = document.querySelector('.final-collage-eyebrow');
+            const title = document.querySelector('.final-collage-title');
+            const subtitle = document.querySelector('.final-collage-subtitle');
+            const cardReveal = document.getElementById('final-collage-reveal');
+            const endingMsg = document.getElementById('final-ending-message');
+
+            if (eyebrow) eyebrow.classList.remove('show');
+            if (title) title.classList.remove('show');
+            if (subtitle) subtitle.classList.remove('show');
+            if (cardReveal) cardReveal.classList.remove('show');
+            if (endingMsg) endingMsg.classList.remove('show');
+
+            initFinalCollageParticles();
+
+            setTimeout(() => {
+                if (eyebrow) eyebrow.classList.add('show');
+            }, 200);
+
+            setTimeout(() => {
+                if (title) title.classList.add('show');
+            }, 500);
+
+            setTimeout(() => {
+                if (subtitle) subtitle.classList.add('show');
+            }, 800);
+
+            setTimeout(() => {
+                if (cardReveal) cardReveal.classList.add('show');
+            }, 1200);
+
+            setTimeout(() => {
+                if (endingMsg) endingMsg.classList.add('show');
+            }, 2200);
+        }
+
         window.onload = () => {
             initFairyLights();
             initCakeCutting();
             initAudioEvents();
+            updatePasscodeUI();
+            startPasscodeParticles();
+            initFinalCollageInteraction();
         };
     </script>
 </body>
